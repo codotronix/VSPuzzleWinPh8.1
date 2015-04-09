@@ -1,0 +1,105 @@
+﻿body.theme-standard {
+    background: #1d1f20;
+    color: #FFF;
+    background: url('../images/puzzleBg.jpg') 0 0 repeat;
+}
+
+.theme-standard .mask,
+.theme-standard #statsBoard {
+    background: linear-gradient(to bottom right, red, black, black, blue);
+}
+
+.theme-standard #gameTitle {
+    color: #A8A8FF;
+    background: rgba(198, 9, 9, 0.76);
+    font-family: Jokerman;
+}
+
+.theme-standard #levelDesc {
+    color: #fc2a44;
+    background: rgba(9, 24, 198, 0.76);
+    font-family: Forte;
+}
+
+.theme-standard #optionsPanel span {
+    background-image: none;
+    width: auto;
+}
+
+.theme-standard #optionsPanel {
+    color: #d9d9d9;
+    background: #000;
+    background: linear-gradient(to bottom right, red, black, black, blue);    
+    border: 5px ridge #9b0000;
+}
+
+.theme-standard #optionsPanel span {    
+    color: #fcff00;
+    font-family: Jokerman;
+}
+
+.theme-standard #selectImage li:hover {
+    border: 1px solid #FFF200;
+}
+
+.theme-standard #secScoreBoard {
+    color: #7d65f7;
+    font-family: 'Monotype Corsiva';
+    background: #000;
+    background: linear-gradient(to bottom right, red, black, blue);
+    border: 10px #9b0000 inset;
+}
+
+.theme-standard #totalTime,
+.theme-standard #totalMove {
+    font-family: 'Informal Roman';
+    color: #d1cb54;
+}
+
+.theme-standard #imageHolder {
+    color: #d9d9d9;
+    background: #402a2a;
+    background: linear-gradient(to bottom right, blue , black);
+}
+
+.theme-standard input[type=button] {
+    background: red /*#4D4D4D*/;
+    color: #FFF;
+    border: #646464 5px outset;
+    border-radius: 3px;
+}
+
+.theme-standard input[type=button]:hover {
+    background: #6873e6;
+    color: #000;
+    border-style: inset;
+}
+
+.theme-standard #boardContainer {
+    /*margin-top: 92px;*/
+}
+
+
+.theme-standard #topButtonPanel .fa {
+    color: #fcff00;
+    background: #000;
+    border: none;
+}
+
+.theme-standard #imageHolder {
+    color: #fcff00;
+    font-family: Jokerman;
+    background: #402a2a;
+    background: #fff;
+    border: 5px ridge #9b0000;
+}
+
+.theme-standard #secScoreBoard {
+    width: 122px;
+    top: 182px;
+    left: 258px;   
+}
+
+.theme-standard #board1 {
+    border-color: #39F;
+}

@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Puzzly_1</title>
+
+    <!-- WinJS references -->
+    <!-- At runtime, ui-themed.css resolves to ui-themed.light.css or ui-themed.dark.css 
+    based on the user’s theme setting. This is part of the MRT resource loading functionality. -->
+    <link href="/css/ui-themed.css" rel="stylesheet" />
+    <script src="//Microsoft.Phone.WinJS.2.1/js/base.js"></script>
+    <script src="//Microsoft.Phone.WinJS.2.1/js/ui.js"></script>
+    <script src="js/jquery-2.1.3.min.js"></script>
+    
+
+    <!-- Puzzly_1 references -->
+    <link href="font-awesome-4.3.0/css/font-awesome.css" rel="stylesheet" />
+    <link href="/css/default.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/theme-standard.css" rel="stylesheet" />
+    <link href="css/theme-metro-blue.css" rel="stylesheet" />
+    <link href="css/theme-passionate-red.css" rel="stylesheet" />
+    <script src="/js/default.js"></script>    
+    <script src="js/script.js"></script>
+</head>
+<body class="phone theme-metro-blue">
+    <div data-win-control="WinJS.UI.ViewBox">
+        <div class="fixedlayout">
+
+            <!-- Body Starts -->
+            <div class="mask">
+                <div>
+                    <span class="fa fa-refresh fa-spin"></span>
+                    <!--<img src="images/redWait.gif" />--><br />
+                    <label>Please wait...</label>
+                </div>
+            </div>
+
+            <!--show completed score-->
+            <section id="statsBoard">
+                <section class="panel">
+                    <div>
+                        <h1>Congratulation</h1>
+                        <section class="leftCol">
+                            <label>Starting Bonus</label>
+                            <label>Time (Approx)</label>
+                            <label>Moves</label>
+                            <label>Image Seen</label>
+                            <label>Total</label>
+                        </section>
+                        <section class="midCol">
+                            <label class="startBonus">100000</label>
+                            <label class="timeTaken">300s [ x (-10) Pts ]</label>
+                            <label class="moveTaken">200 [ x (-20) Pts ]</label>
+                            <label class="imageSeen">6 [ x (-100) Pts ]</label>
+                            <label> - </label>
+                        </section>
+                        <section class="rightCol">
+                            <label class="startBonus"> 100000</label>
+                            <label class="timePenalty">- 3000</label>
+                            <label class="movePenalty">- 4000</label>
+                            <label class="imageSeenPenalty">- 600</label>
+                            <label class="totalScore"> 92400</label>
+                        </section>
+                        <section class="secButton">
+                            <button id="closeStatBoard"> Close </button>
+                        </section>
+                    </div>
+                </section>
+            </section>
+
+            <h1 id="gameTitle">Mini Puzzle</h1>
+            <h2 id="levelDesc">( LEVEL 1 )</h2>
+
+            <section id="topButtonPanel">
+                <span id="showOptionBtn" class="fa fa-list"></span>
+                <span id="showImgBtn" class="fa fa-picture-o"></span>
+            </section>
+
+
+            <section id="optionsPanel" class="down">
+                <!--<div id="AllOptions">-->
+                <!-- Select Level Section -->
+                <div class="optionsContainer">
+                    <h2>Select Level</h2>
+                    <ul id="selectLevel">
+                        <li><label><input type="radio" class="levelSelector" value="3" name="levelSelector" checked /> Level 1 (3x3)</label></li>
+                        <li><label><input type="radio" class="levelSelector" value="4" name="levelSelector" /> Level 2 (4x4)</label></li>
+                        <li><label><input type="radio" class="levelSelector" value="5" name="levelSelector" /> Level 3 (5x5)</label></li>
+                        <li><label><input type="radio" class="levelSelector" value="6" name="levelSelector" /> Level 4 (6x6)</label></li>
+                    </ul>
+                </div>
+                <!-- Select Theme Section -->
+                <div class="optionsContainer">
+                    <h2>Select Theme</h2>
+                    <ul id="selectTheme">
+                        <li><label><input type="radio" class="themeSelector" value="" name="themeSelector" /> Night Time</label></li>
+                        <li><label><input type="radio" class="themeSelector" value="theme-standard" name="themeSelector" /> Color Bonanza</label></li>
+                        <li><label><input type="radio" class="themeSelector" value="theme-metro-blue" name="themeSelector" checked /> Metro Blue</label></li>
+                        <li><label><input type="radio" class="themeSelector" value="theme-passion-red" name="themeSelector" /> Passionate Red</label></li>
+                    </ul>
+                </div>
+                <div class="optionsContainer">
+                    <h2>Select Image</h2>
+                    <ul id="selectImage">
+                        <li><img src="images/1.jpg" /></li>
+                        <li><img src="images/2.jpg" /></li>
+                        <li><img src="images/3.jpg" /></li>
+                        <li><img src="images/4.jpg" /></li>
+                        <li><img src="images/5.jpg" /></li>
+                        <li><img src="images/6.jpg" /></li>
+                        <li><img src="images/7.jpg" /></li>
+                        <li class="noDisplay"><img src="" /></li>
+                        <li class="noDisplay"><img src="" /></li>
+                        <li class="noDisplay"><img src="" /></li>
+                        <li class="noDisplay"><img src="" /></li>
+                        <li class="noDisplay"><img src="" /></li>
+                        <li class="noDisplay"><img src="" /></li>
+                        <li class="noDisplay"><img src="" /></li>
+                        <li class="noDisplay"><img src="" /></li>
+                    </ul>
+                    <!--<input type="button" id="uploadImgButton" value="UPLOAD IMAGE" />-->
+                    <span id="uploadImgButton" class="fa fa-upload"></span>
+                    <!--<input class="noDisplay" type="file" id="uploadImg" accept="image/*" />-->
+                </div>
+
+                <!--</div>-->
+                <!--<input type="button" id="doneOptions" value="Done" />-->
+            </section>
+
+            <section id="secScoreBoard">
+                <section id="moveSection">
+                    Move
+                    <span id="totalMove">0</span>
+                </section>
+                <section id="timeSection">
+                    Timer
+                    <span id="totalTime">0</span>
+                </section>
+                <section id="scoreBoardButtonSection">
+                    <input type="button" id="startStopTimer" class="startTimer" value="Timer On " />
+                    <!--<input type="button" id="stopTimer" value="Timer Off " />-->
+                    <input type="button" id="resetCounter" value="Reset All " />
+                </section>
+            </section>
+
+            <div id="boardContainer">
+                <!-- This is contain the actual game... This is The Board -->
+                <div id="board1"></div>
+
+                <!-- The Buttons -->
+                <section id="secButton">
+                    <input type="button" id="Shuffle" value="Shuffle" />
+                    <input type="button" id="Solve" value="Solve" />
+                </section>
+            </div>
+
+            <!-- This container will show the image if a user wants to see it -->
+            <section id="imageHolder">
+                <span id="imgMsg">CLICK TO SEE THE COMPLETE PICTURE</span>
+                <img id="puzzleImg" src="images/1.jpg" />
+            </section>
+
+            <!-- Body Ends-->
+        </div>
+    </div>
+    <canvas id="canvas" class="noDisplay"></canvas>
+</body>
+</html>

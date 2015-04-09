@@ -1,0 +1,382 @@
+﻿.fixedlayout {
+    height: 667px;
+    min-width: 400px;
+}
+
+body {
+    color: #FFF;
+    background: rgb(29, 29, 29);
+}
+
+.fa {
+    display: inline-block;
+    box-sizing: border-box;
+    font-size: 35px;
+    padding: 10px;
+    border: 1px solid #FFF;
+    border-radius: 30px;
+}
+
+section {
+    display: block;
+    box-sizing: border-box;
+}
+
+h2 {
+    /*margin-bottom: 10px;*/
+}
+
+.mask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    text-align: center;
+    display: none;
+    background: #000;
+}
+
+.mask .fa-spin {
+    font-size: 75px;
+    border: none;
+}
+
+.mask div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.mask label {
+    font-size: 23px;
+}
+
+#statsBoard {
+    display: none;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    z-index: 11;
+    color: #FFF;
+}
+
+#statsBoard .panel {
+    display: table-cell;
+    vertical-align: middle;
+    float: none;
+}
+
+#statsBoard .panel div {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#statsBoard h1 {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+#statsBoard .midCol {
+    text-align: center;
+}
+
+#statsBoard .rightCol {
+    text-align: right;
+}
+
+#statsBoard section {
+    float: left;
+    display: block;
+    font-size: 18px;
+}
+
+#statsBoard .secButton {
+    display: block;
+    text-align: center;
+    float: none;
+}
+
+#statsBoard section label {
+    display: block;
+    line-height: 30px;
+}
+
+.leftCol {
+    width: 37%;
+    padding-left: 10px;
+}
+
+.midCol {
+    width: 40%;
+}
+
+.rightCol {
+    width: 15%;
+}
+
+#gameTitle {
+    margin-top: 0px;
+    padding: 10px 0;
+    text-decoration: underline;    
+    text-align: center;
+}
+
+#levelDesc {
+    margin-top: 0px;    
+    text-align: center;
+    font-size: 28px;
+    padding: 5px 0;
+}
+
+#topButtonPanel {
+    /*border: 1px solid #fff;*/
+    margin: 10px 3px;
+}
+
+#topButtonPanel .fa {
+    margin-left: 7px;
+}
+
+#showOptionBtn {
+    margin-left: 0;
+}
+
+#optionsPanel {
+    position: absolute;    
+    font-size: 24px;
+    padding: 10px;
+    z-index: 2;    
+    background: #000;
+    top: 183px;
+    display: none;
+    overflow: auto;
+    box-sizing: border-box;
+    height: 484px;
+}
+
+#optionsPanel.up,
+#optionsPanel.up #AllOptions {
+    width: 100%;
+    height: 85%;
+}
+
+#optionsPanel .optionsContainer {
+    display: inline-block;
+    float: left;
+    margin: 20px 20px 0 0;
+}
+
+
+#optionsPanel ul li {
+    box-sizing: border-box;
+    list-style: none;
+}
+
+#selectImage li:hover {
+    border: 1px solid #FFF;
+}
+
+#uploadImgButton {
+    margin-left: 5px;
+}
+
+.noDisplay {
+    display: none;
+}
+
+
+#AllOptions {
+    /*width: 257px;
+    width: 100%;*/
+    height: 600px;
+    overflow: auto;
+    display: none;
+}
+
+#optionsPanel ul {
+    padding: 0;
+}
+
+#selectImage li {
+    float: left;
+    margin: 5px 5px;
+    height: 55px;
+    width: 55px;
+    box-sizing: border-box;
+}
+
+#selectImage li img {
+    height: 55px;
+    width: 55px;
+}
+
+#uploadImgButton {
+    margin: 4px 0 5px 5px;
+    font-size: 34px;
+    border-radius: 0;
+}
+
+#boardContainer {
+    /*float: left;*/
+    /*margin: 85px 0 20px 200px;*/
+}
+
+#board1 {
+    box-sizing: content-box;
+    /*border: 9px outset #B5B5B5;*/
+    border: 9px outset #636363;
+    position: relative;
+    float: left;
+    background: #747373;
+    margin: 0 0 20px 0;
+}
+
+#secButton {
+    clear: both;
+    position: relative;    
+    left: 9px;
+}
+
+#secScoreBoard {
+    width: 140px;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 20px;
+    position: absolute;
+    top: 184px;
+    left: 263px;    
+    box-sizing: content-box;    
+}
+
+#moveSection,
+#timeSection {
+    margin: 20px 0;
+    padding-bottom: 10px;
+}
+
+#scoreBoardButtonSection input[type=button] {
+    /*width: 100%;*/
+}
+
+#totalTime,
+#totalMove {
+    font-size: 28px;
+    overflow: hidden;
+    display: block;
+}
+
+#resetCounter {
+    margin-top: 2px;
+}
+
+#imageHolder {
+    margin: 70px 0 50px 40px;
+    float: left;
+    text-align: center;
+    position: relative;    
+    display: block;
+    display: table;       
+    z-index: 1;    
+    box-sizing: border-box;
+}
+
+#imageHolder img {
+    display: none;
+    /*height: 100%;
+    width: 100%;*/
+}
+
+#imageHolder #imgMsg {  
+    font-size: 36px;  
+    display: table-cell;
+    vertical-align: middle;    
+}
+
+.cell {
+    box-sizing: border-box;
+    border: 1px solid #000;
+    position: absolute;
+    overflow: hidden;
+}
+
+input[type=button] {
+    font-size: 20px;        
+    /*padding: 3px 5px;*/
+    margin: 5px 0;
+    outline: none;
+}
+
+#Shuffle {
+    width: 236px;
+    margin-left: 2px;
+}
+
+#Solve {
+    width: 236px;
+    margin: 0 0 0 2px;
+}
+
+@media (max-width: 767px) {
+    #boardContainer {
+        margin-left: 0;
+        /*margin-top: 67px;*/
+    }
+
+    #secButton {        
+        top: -21px;
+    }
+
+    #secScoreBoard {
+        /*top: 755px;
+        width: 462px;*/
+    }
+
+    #moveSection,
+    #timeSection {
+        margin: 0;
+        /*padding-bottom: 10px;*/  
+        border-bottom: none;        
+    }   
+    
+    #secScoreBoard section {
+        display: block;
+        /*width: 100%;*/
+        /*text-align: center;*/
+        /*float: left;*/
+    }
+
+    #scoreBoardButtonSection {
+        /*margin-left: 15px;*/
+    }
+}
+
+@media (max-width: 1200px) { 
+
+   #imageHolder {
+        display: none;
+        position: absolute;
+        left: -42px;
+        top: 113px;
+        padding: 10px;
+        font-size: 24px;    
+        height: auto !important;
+        width: auto !important;
+        border: 5px ridge #FFF;
+        background: #FFF;
+    }
+
+    #imageHolder img {
+        display: block !important;
+    }
+
+    #imageHolder #imgMsg {
+        display: none !important;
+    }
+}
+
+@media (min-width: 1201px) {
+    #imageHolder {
+        display: block;
+        display: table !important;
+    }
+}

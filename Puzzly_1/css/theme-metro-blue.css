@@ -1,0 +1,20 @@
+﻿body.theme-metro-blue,
+.theme-metro-blue .mask {
+    background: rgb(58, 102, 240);
+}
+
+.theme-metro-blue #secScoreBoard,
+.theme-metro-blue #optionsPanel,
+.theme-metro-blue #statsBoard {
+    background: #8081FF;
+}
+
+.theme-metro-blue #board1 {
+    border-color: #8051FF;
+}
+
+@media (max-width: 1200px) {
+    .theme-metro-blue #imageHolder {        
+        border: 5px ridge #8081FF;       
+    }
+}

@@ -1,0 +1,23 @@
+﻿body.theme-passion-red,
+.theme-passion-red .mask {
+    background: rgb(211, 0, 16);
+}
+
+.theme-passion-red #secScoreBoard,
+.theme-passion-red #optionsPanel,
+.theme-passion-red #statsBoard {
+    background: #FF0000;
+}
+
+.theme-passion-red button:hover,
+.theme-passion-red input[type=button]:hover,
+.theme-passion-red input[type=reset]:hover,
+.theme-passion-red input[type=file]::-ms-browse:hover {
+    background-color: rgba(255, 255, 255, 0.17);
+}
+
+@media (max-width: 1200px) {
+    .theme-passion-red #imageHolder {        
+        border: 5px ridge #F00;       
+    }
+}
