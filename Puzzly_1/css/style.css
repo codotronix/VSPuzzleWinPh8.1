@@ -145,6 +145,10 @@ h2 {
     margin-left: 0;
 }
 
+#helpBtn {
+    font-weight: bold;
+}
+
 #optionsPanel {
     position: absolute;    
     font-size: 24px;
