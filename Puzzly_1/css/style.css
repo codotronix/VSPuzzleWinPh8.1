@@ -134,7 +134,11 @@ h2 {
 }
 
 #topButtonPanel .fa {
-    margin-left: 7px;
+    margin-left: 13px;
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    padding-top: 12px;
 }
 
 #showOptionBtn {
