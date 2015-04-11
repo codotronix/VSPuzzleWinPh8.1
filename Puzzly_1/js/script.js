@@ -1,6 +1,6 @@
-﻿$(function(){
-	
-    initGame();   
+﻿$(function () {
+
+    initGame();
 
 });
 
@@ -12,9 +12,12 @@ function initGame() {
         imageWidth = 240;
     }
 
-    var cells = [];			            //an array of cell bojects to hold information about all the cells
-    var m = 3; 				            // say it is a m x m square puzzle
-    var diffFactor = imageWidth / m; 	//total width of teh borad divided by number of cell in each line i.e 231/3 = 77
+    //an array of cell bojects to hold information about all the cells
+    var cells = [];
+    // say it is a m x m square puzzle
+    var m = 3;
+    //total width of the borad divided by number of cell in each line i.e 231/3 = 77
+    var diffFactor = imageWidth / m;
     var blankCellId;
     var totalMove = 0;
     var totalTime = 0;
@@ -28,18 +31,20 @@ function initGame() {
 
     blank = {};
     blank.id = '';
+
     //set height and width of all necessary components
     $('#imageHolder, #board1, #boardContainer').css({
         height: imageWidth + 'px',
         width: imageWidth + 'px',
         /*'min-height': imageWidth + 'px'*/
     });
-    
+
     //console.log(diffFactor);
     $('.cell').css({
         height: diffFactor + 'px',
         width: diffFactor + 'px'
     });
+
 
     function initBoard() {
         var cellNo = 0;
@@ -55,10 +60,11 @@ function initGame() {
                 cells[cellNo].id = 'cell_' + cellNo;
                 cells[cellNo].top = (i * diffFactor) + 'px';
                 cells[cellNo].left = (j * diffFactor) + 'px';
+                cells[cellNo].dataCellId = i + '_' + ((i * diffFactor) + (j * diffFactor));
                 //cells[cellNo].correctTop = cells[cellNo].top;
                 //cells[cellNo].correctLeft = cells[cellNo].left;
 
-                $('<div class="cell" id="' + cells[cellNo].id + '"></div>').appendTo('#board1');
+                $('<div class="cell" id="' + cells[cellNo].id + '" data-cellId="' + cells[cellNo].dataCellId + '"></div>').appendTo('#board1');
                 $('#' + cells[cellNo].id).css({
                     top: cells[cellNo].top,
                     left: cells[cellNo].left,
@@ -93,8 +99,8 @@ function initGame() {
                 //console.log('Not Winner');
                 return (false);
             }
-            
-            if (i == (cells.length-1)) {
+
+            if (i == (cells.length - 1)) {
                 //console.log('Winner');
                 return (true);
             }
@@ -117,13 +123,17 @@ function initGame() {
         var thisTop = parseInt($('#' + cellID).css('top'));
         var blankLeft = parseInt($('#' + blankCellId).css('left'));
         var blankTop = parseInt($('#' + blankCellId).css('top'));
-        
+        var tempoDataCellID;
+
         if ((thisLeft === blankLeft && Math.abs(thisTop - blankTop) === diffFactor) || (thisTop === blankTop && Math.abs(thisLeft - blankLeft) === diffFactor)) {
-            
+
             $('#' + cellID).css('left', $('#' + blankCellId).css('left'));
             $('#' + cellID).css('top', $('#' + blankCellId).css('top'));
             $('#' + blankCellId).css('left', thisLeft);
             $('#' + blankCellId).css('top', thisTop);
+            tempoDataCellID = $('#' + cellID).attr('data-cellid');
+            $('#' + cellID).attr('data-cellid', $('#' + blankCellId).attr('data-cellid'));
+            $('#' + blankCellId).attr('data-cellid', tempoDataCellID);
             swapSuccessful = true;
             totalMove++;
         }
@@ -138,12 +148,16 @@ function initGame() {
     //function shuffleUp() {
     //    var maxCellIndex = cells.length - 1;
     //    var swapCount = 0;
-    //    while (swapCount < 300) {
+    //    var shufflingCount = 300;
+    //    console.log('shuffleUp start sec = ' + new Date().getSeconds());
+    //    while (swapCount < shufflingCount) {
     //        var randomCellIndex = Math.floor(Math.random() * maxCellIndex) + 1;
     //        if (swapIfSwappable('cell_' + randomCellIndex)) {
     //            swapCount++;
+    //            console.log('loop = ' + swapCount + ' of ' + shufflingCount);
     //        }
     //    }
+    //    console.log('shuffleUp end sec = ' + new Date().getSeconds());
     //    hideMask();
     //    resetPlayerStats();
     //}
@@ -151,7 +165,136 @@ function initGame() {
 
     //in this new shuffle function we will concentrate on mainly moving the blank cell
     //to random directions, thus shuffling the puzzle
-    function shuffleUp2 () {
+    //function shuffleUp2() {
+    //    //checking the position of black cell, determine in which direction the blank cell 
+    //    //can move
+    //    //say we want to move it 300 times
+
+    //    //record the prev move, if prev move is right, blank should not go to left and vice versa... 
+    //    //and prev up should restrict down on this move and vice versa
+    //    var prev = -1;
+    //    var shufflingLoop = 300; //50 * m;
+
+    //    console.log('shuffleUp2 loop start time = ' + (new Date().getSeconds()));
+    //    for (var i = 0; i < shufflingLoop; i++) {
+    //        console.log('loop = ' + i + ' of ' + shufflingLoop);
+    //        //1=up, 2=right, 3=down, 4=left
+    //        var tempDirections = [];
+
+    //        //console.log(tempDirections);
+
+    //        //restrict vertical movement
+    //        if ($('#' + blank.id).css('top') == '0px' && prev != 1) {
+    //            //can move towards down
+    //            tempDirections.push(3);
+    //        }
+    //        else if ($('#' + blank.id).css('top') == ((imageWidth - diffFactor) + 'px') && prev != 3) {
+    //            //can move towards up
+    //            tempDirections.push(1);
+    //        }
+    //        else {
+    //            //free to move both up and down
+    //            if (prev != 1) { tempDirections.push(3); }
+    //            if (prev != 3) { tempDirections.push(1); }
+    //        }
+
+    //        //restrict horizontal movement
+    //        if ($('#' + blank.id).css('left') == '0px' && prev != 4) {
+    //            //can move towards right
+    //            tempDirections.push(2);
+    //        }
+    //        else if ($('#' + blank.id).css('left') == ((imageWidth - diffFactor) + 'px') && prev != 2) {
+    //            //can move towards left
+    //            tempDirections.push(4);
+    //        }
+    //        else {
+    //            //free to move both left and right
+    //            if (prev != 2) { tempDirections.push(4); }
+    //            if (prev != 4) { tempDirections.push(2); }
+    //        }
+
+    //        //console.log(tempDirections);
+
+    //        //pick a random direction from tempDirections array
+    //        var ranDir = Math.floor(Math.random() * tempDirections.length);
+    //        prev = tempDirections[ranDir];
+
+    //        var blankLeft = parseInt($('#' + blank.id).css('left'));
+    //        var blankTop = parseInt($('#' + blank.id).css('top'));
+    //        var totalCells = $('.cell').length;
+    //        //console.log(tempDirections[ranDir]);
+
+    //        if (tempDirections[ranDir] == 1) { //top is chosen
+    //            //console.log('to be moved up');
+    //            //$('.cell').each(function () {
+    //            for (var k = 1; k < totalCells; k++) {
+    //                var thisCell = $('#cell_' + k);
+    //                var thisLeft = parseInt(thisCell.css('left'));
+    //                var thisTop = parseInt(thisCell.css('top'));
+    //                if (thisLeft == blankLeft && (thisTop + diffFactor) == blankTop) {
+    //                    var temp = $('#' + blank.id).css('top');
+    //                    $('#' + blank.id).css('top', thisCell.css('top'));
+    //                    thisCell.css('top', temp);
+    //                    break;
+    //                }
+    //            }
+    //            //})
+    //        }
+    //        else if (tempDirections[ranDir] == 2) { //right is chosen
+    //            //console.log('to be moved right');
+    //            //$('.cell').each(function () {
+    //            for (var k = 1; k < totalCells; k++) {
+    //                var thisCell = $('#cell_' + k);
+    //                var thisLeft = parseInt(thisCell.css('left'));
+    //                var thisTop = parseInt(thisCell.css('top'));
+    //                if ((thisLeft - diffFactor) == blankLeft && thisTop == blankTop) {
+    //                    var temp = $('#' + blank.id).css('left');
+    //                    $('#' + blank.id).css('left', thisCell.css('left'));
+    //                    thisCell.css('left', temp);
+    //                    break;
+    //                }
+    //            }
+    //            //})
+    //        }
+    //        else if (tempDirections[ranDir] == 3) { //down is chosen
+    //            //console.log('to be moved down');
+    //            //$('.cell').each(function () {
+    //            for (var k = 1; k < totalCells; k++) {
+    //                var thisCell = $('#cell_' + k);
+    //                var thisLeft = parseInt(thisCell.css('left'));
+    //                var thisTop = parseInt(thisCell.css('top'));
+    //                if (thisLeft == blankLeft && (thisTop - diffFactor) == blankTop) {
+    //                    var temp = $('#' + blank.id).css('top');
+    //                    $('#' + blank.id).css('top', thisCell.css('top'));
+    //                    thisCell.css('top', temp);
+    //                    break;
+    //                }
+    //            }
+    //            //})
+    //        }
+    //        else if (tempDirections[ranDir] == 4) { //left is chosen 
+    //            //console.log('to be moved left');
+    //            //$('.cell').each(function () {
+    //            for (var k = 1; k < totalCells; k++) {
+    //                var thisCell = $('#cell_' + k);
+    //                var thisLeft = parseInt(thisCell.css('left'));
+    //                var thisTop = parseInt(thisCell.css('top'));
+    //                if ((thisLeft + diffFactor) == blankLeft && thisTop == blankTop) {
+    //                    var temp = $('#' + blank.id).css('left');
+    //                    $('#' + blank.id).css('left', thisCell.css('left'));
+    //                    thisCell.css('left', temp);
+    //                    break;
+    //                }
+    //            }
+    //            //})
+    //        }
+    //    }
+    //    console.log('shuffleUp2 loop end time = ' + (new Date().getSeconds()));
+    //    hideMask();
+    //    resetPlayerStats();
+    //}
+
+    function shuffleUp3() {
         //checking the position of black cell, determine in which direction the blank cell 
         //can move
         //say we want to move it 300 times
@@ -159,18 +302,25 @@ function initGame() {
         //record the prev move, if prev move is right, blank should not go to left and vice versa... 
         //and prev up should restrict down on this move and vice versa
         var prev = -1;
+        var shufflingLoop = 17 * m;
+        var tempo;
+        console.log('shuffleUp3 loop start time = ' + (new Date().getSeconds()));
+        var targetCellId;
 
-        for (var i = 0; i < 100; i++) {
-
-            var tempDirections = []; //1=up, 2=right, 3=down, 4=left
+        for (var i = 0; i < shufflingLoop; i++) {
+            console.log('loop = ' + i + ' of ' + shufflingLoop);
+            //1=up, 2=right, 3=down, 4=left
+            var tempDirections = [];
+            var blankTopPx = $('#' + blank.id).css('top');
+            var blankLeftPx = $('#' + blank.id).css('left');
             //console.log(tempDirections);
 
             //restrict vertical movement
-            if ($('#' + blank.id).css('top') == '0px' && prev != 1) {
+            if (blankTopPx == '0px' && prev != 1) {
                 //can move towards down
                 tempDirections.push(3);
             }
-            else if ($('#' + blank.id).css('top') == ((imageWidth - diffFactor) + 'px') && prev != 3) {
+            else if (blankTopPx == ((imageWidth - diffFactor) + 'px') && prev != 3) {
                 //can move towards up
                 tempDirections.push(1);
             }
@@ -181,11 +331,11 @@ function initGame() {
             }
 
             //restrict horizontal movement
-            if ($('#' + blank.id).css('left') == '0px' && prev != 4) {
+            if (blankLeftPx == '0px' && prev != 4) {
                 //can move towards right
                 tempDirections.push(2);
-            } 
-            else if ($('#' + blank.id).css('left') == ((imageWidth - diffFactor) + 'px') && prev != 2) {
+            }
+            else if (blankLeftPx == ((imageWidth - diffFactor) + 'px') && prev != 2) {
                 //can move towards left
                 tempDirections.push(4);
             }
@@ -194,67 +344,65 @@ function initGame() {
                 if (prev != 2) { tempDirections.push(4); }
                 if (prev != 4) { tempDirections.push(2); }
             }
-            
+
             //console.log(tempDirections);
 
             //pick a random direction from tempDirections array
             var ranDir = Math.floor(Math.random() * tempDirections.length);
             prev = tempDirections[ranDir];
 
-            var blankLeft = parseInt($('#' + blank.id).css('left'));
-            var blankTop = parseInt($('#' + blank.id).css('top'));
+            var blankLeft = parseInt(blankLeftPx);
+            var blankTop = parseInt(blankTopPx);
+            var blankOnRow = parseInt($('#' + blank.id).attr('data-cellid').toString().split('_')[0])   //row starting from 0
+            var totalCells = $('.cell').length;
             //console.log(tempDirections[ranDir]);
-            if (tempDirections[ranDir] == 1) { //top is chosen
+
+            if (tempDirections[ranDir] == 1) { //up is chosen
                 //console.log('to be moved up');
-                $('.cell').each(function () {
-                    var thisLeft = parseInt($(this).css('left'));
-                    var thisTop = parseInt($(this).css('top'));
-                    if (thisLeft == blankLeft && (thisTop + 80) == blankTop) {
-                        var temp = $('#' + blank.id).css('top');
-                        $('#' + blank.id).css('top', $(this).css('top'));
-                        $(this).css('top', temp);
-                    }
-                })
+                var targetDataCellId = (blankOnRow - 1) + '_' + ((blankTop - diffFactor) + blankLeft);
+                //console.log(targetDataCellId);
+                targetCellId = '#' + $('.cell[data-cellid=' + targetDataCellId + ']').attr('id');
+                //console.log(targetCellId);
+                //console.log($(targetCellId).css('top'));
+                $('#' + blank.id).css('top', $(targetCellId).css('top'));
+                $(targetCellId).css('top', blankTopPx);
             }
             else if (tempDirections[ranDir] == 2) { //right is chosen
-               //console.log('to be moved right');
-                $('.cell').each(function () {
-                    var thisLeft = parseInt($(this).css('left'));
-                    var thisTop = parseInt($(this).css('top'));
-                    if ((thisLeft - 80) == blankLeft && thisTop == blankTop) {
-                        var temp = $('#' + blank.id).css('left');
-                        $('#' + blank.id).css('left', $(this).css('left'));
-                        $(this).css('left', temp);
-                    }
-                })
+                //console.log('to be moved right');
+                var targetDataCellId = blankOnRow + '_' + (blankTop + (blankLeft + diffFactor));
+                //console.log(targetDataCellId);
+                targetCellId = '#' + $('.cell[data-cellid=' + targetDataCellId + ']').attr('id');
+                //console.log(targetCellId);
+                $('#' + blank.id).css('left', $(targetCellId).css('left'));
+                $(targetCellId).css('left', blankLeftPx);
             }
             else if (tempDirections[ranDir] == 3) { //down is chosen
                 //console.log('to be moved down');
-                $('.cell').each(function () {
-                    var thisLeft = parseInt($(this).css('left'));
-                    var thisTop = parseInt($(this).css('top'));
-                    if (thisLeft == blankLeft && (thisTop -80) == blankTop) {
-                        var temp = $('#' + blank.id).css('top');
-                        $('#' + blank.id).css('top', $(this).css('top'));
-                        $(this).css('top', temp);
-                    }
-                })
+                var targetDataCellId = (blankOnRow + 1) + '_' + ((blankTop + diffFactor) + blankLeft);
+                //console.log(targetDataCellId);
+                targetCellId = '#' + $('.cell[data-cellid=' + targetDataCellId + ']').attr('id');
+                //console.log(targetCellId);
+                $('#' + blank.id).css('top', $(targetCellId).css('top'));
+                $(targetCellId).css('top', blankTopPx);
             }
             else if (tempDirections[ranDir] == 4) { //left is chosen 
                 //console.log('to be moved left');
-                $('.cell').each(function () {
-                    var thisLeft = parseInt($(this).css('left'));
-                    var thisTop = parseInt($(this).css('top'));
-                    if ((thisLeft + 80) == blankLeft && thisTop == blankTop) {
-                        var temp = $('#' + blank.id).css('left');
-                        $('#' + blank.id).css('left', $(this).css('left'));
-                        $(this).css('left', temp);
-                    }
-                })
+                var targetDataCellId = blankOnRow + '_' + (blankTop + (blankLeft - diffFactor));
+                //console.log(targetDataCellId);
+                targetCellId = '#' + $('.cell[data-cellid=' + targetDataCellId + ']').attr('id');
+                //console.log(targetCellId);
+                $('#' + blank.id).css('left', $(targetCellId).css('left'));
+                $(targetCellId).css('left', blankLeftPx);
             }
+
+            //swap the data-cellIDs between targetCell and Blankcell
+            tempo = $(targetCellId).attr('data-cellid');
+            $(targetCellId).attr('data-cellid', $('#' + blank.id).attr('data-cellid'));
+            $('#' + blank.id).attr('data-cellid', tempo);
         }
-            hideMask();
-            resetPlayerStats();
+        console.log('shuffleUp3 loop end time = ' + (new Date().getSeconds()));
+        hideMask();
+        resetPlayerStats();
     }
 
     function increaseTime() {
@@ -282,12 +430,12 @@ function initGame() {
 
         // Open the picker for the user to pick a file
         openPicker.pickSingleFileAndContinue();
-    }   
-     
+    }
+
     //whenever a winner happens, this function will preparepopulate the statsBoard board with real data
     function populateCongratsBoard() {
         var startBonus = 100000;
-        var timeTaken = Math.round(((new Date().getTime()) - player.startTime)/1000);
+        var timeTaken = Math.round(((new Date().getTime()) - player.startTime) / 1000);
         //console.log(player.startTime)
         //totalMove
         var levelValue = parseInt($('#selectLevel input[type=radio]:checked').val())
@@ -343,7 +491,7 @@ function initGame() {
         function callShuffleUpOnMask() {
             if ($('.mask').css('display') == 'table') {
                 //if mask is shown then only shuffle
-                setTimeout(shuffleUp2, 50);
+                setTimeout(shuffleUp3, 50);
             } else {
                 //wait and check again
                 setTimeout(callShuffleUpOnMask, 50);
@@ -366,18 +514,18 @@ function initGame() {
 
     //Clicking on Start/Stop Timer
     $('#startStopTimer').on('click', function () {
-        if($(this).hasClass('startTimer')) {
+        if ($(this).hasClass('startTimer')) {
             if (!timerOn) {
                 timerOn = true;
                 $(this).removeClass('startTimer').addClass('stopTimer').val('Timer Off');
                 setTimeout(increaseTime, 1000);
             }
         } else if ($(this).hasClass('stopTimer')) {
-            timerOn = false; 
+            timerOn = false;
             $(this).removeClass('stopTimer').addClass('startTimer').val('Timer On');
         }
-        
-    });   
+
+    });
 
     //CLICKING ON A CELL
     $('#board1').on('click', '.cell', function () {
@@ -440,7 +588,7 @@ function initGame() {
         //$('#optionsPanel').removeClass('up').addClass('down');
 
         if ($(window).innerWidth() >= 1200) {
-            $('#imageHolder').css('display','table');
+            $('#imageHolder').css('display', 'table');
             $('#imageHolder img').hide();
             $('#imageHolder span').show();
         } else {
@@ -450,21 +598,21 @@ function initGame() {
     });
 
     //imageHolder is clicked
-    $('#imageHolder').click(function (e) {     
+    $('#imageHolder').click(function (e) {
         e.stopPropagation();
         if ($(window).innerWidth() > 1200) {
             if ($('#imageHolder img').css('display') == 'none') {
                 player.imageSeen++;
-            }                
+            }
             $('#imageHolder img').toggle();
             $('#imageHolder span').toggle();
         } else {
             $(this).hide();
-        }        
+        }
     });
 
     //upload image button is clicked
-    $('#uploadImgButton').on('click', function () {        
+    $('#uploadImgButton').on('click', function () {
         pickSinglePhoto();
     });
 
@@ -493,7 +641,7 @@ function initGame() {
 //this function will show the mask for some time taking operation
 function showMask() {
     //console.log('showmask called');
-   
+
     $('.mask').css('display', 'table');
     //$('.mask').show();
 }
@@ -501,11 +649,8 @@ function showMask() {
 //this function will hide the mask
 function hideMask() {
     //console.log('hidemask called');
-    
+
     window.setTimeout(function () {
         $('.mask').hide(500);
     }, 5);
 }
-
-
-
