@@ -26,9 +26,8 @@ function initGame() {
     player.startTime = new Date().getTime();        //this will hold last shuffling time
     player.imageSeen = 0;
 
-    
-
-
+    blank = {};
+    blank.id = '';
     //set height and width of all necessary components
     $('#imageHolder, #board1, #boardContainer').css({
         height: imageWidth + 'px',
@@ -79,7 +78,7 @@ function initGame() {
         //now clear the background image of the last cell, so that i shows a blank space
         blankCellId = cells[cellNo].id;
         $('#' + blankCellId).css('background-image', 'none');
-
+        blank.id = blankCellId;
         //hide the mask if visible
         hideMask();
     }
@@ -136,19 +135,126 @@ function initGame() {
     }
 
     //this function will shuffle the puzzle for playing again
-    function shuffleUp() {
-        console.log('inside shuffle up');
-        //totalMove = 0;
-        var maxCellIndex = cells.length - 1;
-        var swapCount = 0;
-        while (swapCount < 300) {
-            var randomCellIndex = Math.floor(Math.random() * maxCellIndex) + 1;
-            if (swapIfSwappable('cell_' + randomCellIndex)) {
-                swapCount++;
+    //function shuffleUp() {
+    //    var maxCellIndex = cells.length - 1;
+    //    var swapCount = 0;
+    //    while (swapCount < 300) {
+    //        var randomCellIndex = Math.floor(Math.random() * maxCellIndex) + 1;
+    //        if (swapIfSwappable('cell_' + randomCellIndex)) {
+    //            swapCount++;
+    //        }
+    //    }
+    //    hideMask();
+    //    resetPlayerStats();
+    //}
+
+
+    //in this new shuffle function we will concentrate on mainly moving the blank cell
+    //to random directions, thus shuffling the puzzle
+    function shuffleUp2 () {
+        //checking the position of black cell, determine in which direction the blank cell 
+        //can move
+        //say we want to move it 300 times
+
+        //record the prev move, if prev move is right, blank should not go to left and vice versa... 
+        //and prev up should restrict down on this move and vice versa
+        var prev = -1;
+
+        for (var i = 0; i < 100; i++) {
+
+            var tempDirections = []; //1=up, 2=right, 3=down, 4=left
+            //console.log(tempDirections);
+
+            //restrict vertical movement
+            if ($('#' + blank.id).css('top') == '0px' && prev != 1) {
+                //can move towards down
+                tempDirections.push(3);
+            }
+            else if ($('#' + blank.id).css('top') == ((imageWidth - diffFactor) + 'px') && prev != 3) {
+                //can move towards up
+                tempDirections.push(1);
+            }
+            else {
+                //free to move both up and down
+                if (prev != 1) { tempDirections.push(3); }
+                if (prev != 3) { tempDirections.push(1); }
+            }
+
+            //restrict horizontal movement
+            if ($('#' + blank.id).css('left') == '0px' && prev != 4) {
+                //can move towards right
+                tempDirections.push(2);
+            } 
+            else if ($('#' + blank.id).css('left') == ((imageWidth - diffFactor) + 'px') && prev != 2) {
+                //can move towards left
+                tempDirections.push(4);
+            }
+            else {
+                //free to move both left and right
+                if (prev != 2) { tempDirections.push(4); }
+                if (prev != 4) { tempDirections.push(2); }
+            }
+            
+            //console.log(tempDirections);
+
+            //pick a random direction from tempDirections array
+            var ranDir = Math.floor(Math.random() * tempDirections.length);
+            prev = tempDirections[ranDir];
+
+            var blankLeft = parseInt($('#' + blank.id).css('left'));
+            var blankTop = parseInt($('#' + blank.id).css('top'));
+            //console.log(tempDirections[ranDir]);
+            if (tempDirections[ranDir] == 1) { //top is chosen
+                //console.log('to be moved up');
+                $('.cell').each(function () {
+                    var thisLeft = parseInt($(this).css('left'));
+                    var thisTop = parseInt($(this).css('top'));
+                    if (thisLeft == blankLeft && (thisTop + 80) == blankTop) {
+                        var temp = $('#' + blank.id).css('top');
+                        $('#' + blank.id).css('top', $(this).css('top'));
+                        $(this).css('top', temp);
+                    }
+                })
+            }
+            else if (tempDirections[ranDir] == 2) { //right is chosen
+               //console.log('to be moved right');
+                $('.cell').each(function () {
+                    var thisLeft = parseInt($(this).css('left'));
+                    var thisTop = parseInt($(this).css('top'));
+                    if ((thisLeft - 80) == blankLeft && thisTop == blankTop) {
+                        var temp = $('#' + blank.id).css('left');
+                        $('#' + blank.id).css('left', $(this).css('left'));
+                        $(this).css('left', temp);
+                    }
+                })
+            }
+            else if (tempDirections[ranDir] == 3) { //down is chosen
+                //console.log('to be moved down');
+                $('.cell').each(function () {
+                    var thisLeft = parseInt($(this).css('left'));
+                    var thisTop = parseInt($(this).css('top'));
+                    if (thisLeft == blankLeft && (thisTop -80) == blankTop) {
+                        var temp = $('#' + blank.id).css('top');
+                        $('#' + blank.id).css('top', $(this).css('top'));
+                        $(this).css('top', temp);
+                    }
+                })
+            }
+            else if (tempDirections[ranDir] == 4) { //left is chosen 
+                //console.log('to be moved left');
+                $('.cell').each(function () {
+                    var thisLeft = parseInt($(this).css('left'));
+                    var thisTop = parseInt($(this).css('top'));
+                    if ((thisLeft + 80) == blankLeft && thisTop == blankTop) {
+                        var temp = $('#' + blank.id).css('left');
+                        $('#' + blank.id).css('left', $(this).css('left'));
+                        $(this).css('left', temp);
+                    }
+                })
             }
         }
-        hideMask();
-        resetPlayerStats();
+            hideMask();
+            resetPlayerStats();
     }
 
     function increaseTime() {
@@ -159,46 +265,6 @@ function initGame() {
             setTimeout(increaseTime, 1000);
         }
     }
-
-    //This function reads the uploaded image URL and 
-    //returns the src URL of the image
-    //function readURL(input) {
-    //    if (input.files && input.files[0]) {
-    //        var reader = new FileReader();
-
-    //        reader.onload = function (e) {
-    //            //doCrop(e.target.result)
-    //            //console.log("1. e.target.result = " + e.target.result);
-    //            //return (e.target.result);
-    //            cropImage(e.target.result, 480);
-    //        }
-    //        reader.readAsDataURL(input.files[0]);
-    //    }
-    //}
-
-    //this function takes the SRC IMAGE URL and DESIRED SIZE
-    //and then crops it into desired size (height=width), square
-    //and returns the result image url
-    //function cropImage(imgSrc, size) {
-    //    //console.log("2. imgSrc" + imgSrc);
-    //    $('#canvas')[0].height = size;
-    //    $('#canvas')[0].width = size;
-    //    var canvas=document.getElementById("canvas");
-    //    var ctx=canvas.getContext("2d");
-    //    var img=new Image();
-
-    //    img.onload=function(){
-    //        crop();
-    //    }
-    //    img.src=imgSrc;
-
-    //    function crop(){            
-    //        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, size, size);          
-    //        populateImgSlot(canvas.toDataURL());
-
-    //        hideMask();
-    //    }
-    //}    
 
     //open the image file explorer for user
     function pickSinglePhoto() {
@@ -269,7 +335,7 @@ function initGame() {
 
     //Shuffle button is clicked
     $('#Shuffle').click(function () {
-        console.log('shuffle clicked');
+        //console.log('shuffle clicked');
         showMask();
         //shuffleUp();
         //call the shuffle function with a delay, so that the screen doesnot get freezed immediately        
@@ -277,7 +343,7 @@ function initGame() {
         function callShuffleUpOnMask() {
             if ($('.mask').css('display') == 'table') {
                 //if mask is shown then only shuffle
-                setTimeout(shuffleUp, 50);
+                setTimeout(shuffleUp2, 50);
             } else {
                 //wait and check again
                 setTimeout(callShuffleUpOnMask, 50);
@@ -426,7 +492,7 @@ function initGame() {
 
 //this function will show the mask for some time taking operation
 function showMask() {
-    console.log('showmask called');
+    //console.log('showmask called');
    
     $('.mask').css('display', 'table');
     //$('.mask').show();
@@ -434,7 +500,7 @@ function showMask() {
 
 //this function will hide the mask
 function hideMask() {
-    console.log('hidemask called');
+    //console.log('hidemask called');
     
     window.setTimeout(function () {
         $('.mask').hide(500);

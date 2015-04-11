@@ -37,7 +37,7 @@
 function activated(eventObject) {
     var activationKind = eventObject.detail.kind;
     var activatedEventArgs = eventObject.detail.detail;
-    console.log(activationKind);
+    //console.log(activationKind);
     if (activationKind == 1002) {
         continueFileOpenPicker(activatedEventArgs);
         //if (options && options.activationKind === Windows.ApplicationModel.Activation.ActivationKind.pickFileContinuation) {
@@ -54,8 +54,8 @@ function continueFileOpenPicker(eventObject) {
     if (filePicked !== null) {
         // Application now has read/write access to the picked file
         WinJS.log && WinJS.log("Picked photo: " + filePicked.name, "sample", "status");
-        console.log("Picked photo: " + filePicked.name, "sample", "status");
-        console.log(filePicked.path);
+        //console.log("Picked photo: " + filePicked.name, "sample", "status");
+        //console.log(filePicked.path);
         var file = MSApp.createFileFromStorageFile(filePicked);
         // than use the file variable in the createObjectURL function
         var url = URL.createObjectURL(file, { oneTimeOnly: true });
@@ -64,7 +64,7 @@ function continueFileOpenPicker(eventObject) {
     } else {
         // The picker was dismissed with no selected file
         WinJS.log && WinJS.log("Operation cancelled.", "sample", "status");
-        console.log("Operation cancelled.", "sample", "status");
+        //console.log("Operation cancelled.", "sample", "status");
     }
 }
 
@@ -72,7 +72,7 @@ function continueFileOpenPicker(eventObject) {
 //and then crops it into desired size (height=width), square
 //and returns the result image url
 function cropImage(imgSrc, size) {
-    console.log("2. imgSrc" + imgSrc);
+    //console.log("2. imgSrc" + imgSrc);
     $('#canvas')[0].height = size;
     $('#canvas')[0].width = size;
     var canvas = document.getElementById("canvas");
