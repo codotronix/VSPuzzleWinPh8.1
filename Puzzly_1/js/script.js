@@ -7,11 +7,8 @@
 function initGame() {
     // NOTE: I have started the Cell Array from 1... Hence the 0th location is blank
 
-    var imageWidth = 480	            //	$('#puzzleImg').height(); //Since I have decided to take only 240x240 size image, So can be hard coded
-    if ($('body').hasClass('phone')) {
-        imageWidth = 240;
-    }
-
+    var imageWidth = 240;	            //	$('#puzzleImg').height(); //Since I have decided to take only 240x240 size image, So can be hard coded
+   
     //an array of cell bojects to hold information about all the cells
     var cells = [];
     // say it is a m x m square puzzle
@@ -26,7 +23,8 @@ function initGame() {
 
     var player = {};
     player.isPlaying = false;
-    player.startTime = new Date().getTime();        //this will hold last shuffling time
+    //this will hold last shuffling time
+    player.startTime = new Date().getTime();
     player.imageSeen = 0;
 
     blank = {};
@@ -35,8 +33,7 @@ function initGame() {
     //set height and width of all necessary components
     $('#imageHolder, #board1, #boardContainer').css({
         height: imageWidth + 'px',
-        width: imageWidth + 'px',
-        /*'min-height': imageWidth + 'px'*/
+        width: imageWidth + 'px'
     });
 
     //console.log(diffFactor);
@@ -91,10 +88,7 @@ function initGame() {
 
     //Check if player has won
     function isWinner() {
-
-        //console.log(cells);
         for (var i = 1; i < cells.length; i++) {
-            //console.log(i);
             if (cells[i].left != $('#cell_' + i).css('left') || cells[i].top != $('#cell_' + i).css('top')) {
                 //console.log('Not Winner');
                 return (false);
@@ -153,16 +147,13 @@ function initGame() {
         var prev = -1;
         var shufflingLoop = 17 * m;
         var tempo;
-        //console.log('shuffleUp3 loop start time = ' + (new Date().getSeconds()));
         var targetCellId;
 
         for (var i = 0; i < shufflingLoop; i++) {
-            //console.log('loop = ' + i + ' of ' + shufflingLoop);
             //1=up, 2=right, 3=down, 4=left
             var tempDirections = [];
             var blankTopPx = $('#' + blank.id).css('top');
             var blankLeftPx = $('#' + blank.id).css('left');
-            //console.log(tempDirections);
 
             //restrict vertical movement
             if (blankTopPx == '0px' && prev != 1) {
@@ -194,8 +185,6 @@ function initGame() {
                 if (prev != 4) { tempDirections.push(2); }
             }
 
-            //console.log(tempDirections);
-
             //pick a random direction from tempDirections array
             var ranDir = Math.floor(Math.random() * tempDirections.length);
             prev = tempDirections[ranDir];
@@ -204,42 +193,28 @@ function initGame() {
             var blankTop = parseInt(blankTopPx);
             var blankOnRow = parseInt($('#' + blank.id).attr('data-cellid').toString().split('_')[0])   //row starting from 0
             var totalCells = $('.cell').length;
-            //console.log(tempDirections[ranDir]);
 
             if (tempDirections[ranDir] == 1) { //up is chosen
-                //console.log('to be moved up');
                 var targetDataCellId = (blankOnRow - 1) + '_' + ((blankTop - diffFactor) + blankLeft);
-                //console.log(targetDataCellId);
                 targetCellId = '#' + $('.cell[data-cellid=' + targetDataCellId + ']').attr('id');
-                //console.log(targetCellId);
-                //console.log($(targetCellId).css('top'));
                 $('#' + blank.id).css('top', $(targetCellId).css('top'));
                 $(targetCellId).css('top', blankTopPx);
             }
             else if (tempDirections[ranDir] == 2) { //right is chosen
-                //console.log('to be moved right');
                 var targetDataCellId = blankOnRow + '_' + (blankTop + (blankLeft + diffFactor));
-                //console.log(targetDataCellId);
                 targetCellId = '#' + $('.cell[data-cellid=' + targetDataCellId + ']').attr('id');
-                //console.log(targetCellId);
                 $('#' + blank.id).css('left', $(targetCellId).css('left'));
                 $(targetCellId).css('left', blankLeftPx);
             }
             else if (tempDirections[ranDir] == 3) { //down is chosen
-                //console.log('to be moved down');
                 var targetDataCellId = (blankOnRow + 1) + '_' + ((blankTop + diffFactor) + blankLeft);
-                //console.log(targetDataCellId);
                 targetCellId = '#' + $('.cell[data-cellid=' + targetDataCellId + ']').attr('id');
-                //console.log(targetCellId);
                 $('#' + blank.id).css('top', $(targetCellId).css('top'));
                 $(targetCellId).css('top', blankTopPx);
             }
-            else if (tempDirections[ranDir] == 4) { //left is chosen 
-                //console.log('to be moved left');
-                var targetDataCellId = blankOnRow + '_' + (blankTop + (blankLeft - diffFactor));
-                //console.log(targetDataCellId);
-                targetCellId = '#' + $('.cell[data-cellid=' + targetDataCellId + ']').attr('id');
-                //console.log(targetCellId);
+            else if (tempDirections[ranDir] == 4) { //left is chosen               
+                var targetDataCellId = blankOnRow + '_' + (blankTop + (blankLeft - diffFactor));               
+                targetCellId = '#' + $('.cell[data-cellid=' + targetDataCellId + ']').attr('id');                
                 $('#' + blank.id).css('left', $(targetCellId).css('left'));
                 $(targetCellId).css('left', blankLeftPx);
             }
@@ -249,7 +224,7 @@ function initGame() {
             $(targetCellId).attr('data-cellid', $('#' + blank.id).attr('data-cellid'));
             $('#' + blank.id).attr('data-cellid', tempo);
         }
-        //console.log('shuffleUp3 loop end time = ' + (new Date().getSeconds()));
+        
         hideMask();
         resetPlayerStats();
     }
@@ -332,11 +307,7 @@ function initGame() {
 
     //Shuffle button is clicked
     $('#Shuffle').click(function () {
-        //console.log('shuffle clicked');
         showMask();
-        //shuffleUp();
-        //call the shuffle function with a delay, so that the screen doesnot get freezed immediately        
-        //the shuffleup should be called only after mask is displayed to prevent screen freezing
         function callShuffleUpOnMask() {
             if ($('.mask').css('display') == 'table') {
                 //if mask is shown then only shuffle
@@ -378,7 +349,6 @@ function initGame() {
 
     //CLICKING ON A CELL
     $('#board1').on('click', '.cell', function () {
-        //if ($('.mask').css('display') != 'none') { console.log('cell click not taken'); return; } else { console.log('cell clicked');}
         //Swap this cell with blank cell if this cell is swappable...		
         swapIfSwappable($(this).attr('id'));
         $('#totalMove').html(totalMove);
@@ -398,7 +368,7 @@ function initGame() {
         $('#levelDesc').html("( LEVEL " + (m - 2) + " )");
         diffFactor = imageWidth / m;
         $('#board1').html('');
-        //init();
+        
         //wait for the mask to show itself
         window.setTimeout(init, 100);
     })
@@ -409,7 +379,7 @@ function initGame() {
         imageUrl = $(this).attr('src');
         $('#puzzleImg').attr('src', imageUrl);
         $('#board1').html('');
-        //init();
+
         //wait for the mask to show itself
         window.setTimeout(init, 100);
     });
@@ -420,50 +390,14 @@ function initGame() {
         $('body').removeClass().addClass(themeClass);
     });
 
-    //#optionsPanel is clicked
-    //$('#options').click(function (e) {
-    //    e.stopPropagation();
-    //    $('#optionsPanel').toggle();
-    //});
-
     $('html').click(function () {
         $('.dropPanel').hide();
     });
-
-    //imageHolder is clicked
-    //$('#imageHolder').click(function (e) {
-    //    e.stopPropagation();
-    //    if ($(window).innerWidth() > 1200) {
-    //        if ($('#imageHolder img').css('display') == 'none') {
-    //            player.imageSeen++;
-    //        }
-    //        $('#imageHolder img').toggle();
-    //        $('#imageHolder span').toggle();
-    //    } else {
-    //        $(this).hide();
-    //    }
-    //});
 
     //upload image button is clicked
     $('#uploadImgButton').on('click', function () {
         pickSinglePhoto();
     });
-
-    //when window is resized
-    //$(window).resize(function () {
-    //    if ($(window).innerWidth() < 1200) {
-    //        $('#imageHolder').hide();
-    //    }
-    //    //console.log("Width=" + $(this).innerWidth() + " Height=" + $(this).innerHeight());
-    //});
-
-    //$('#showImgBtn').on('click', function (e) {
-    //    e.stopPropagation();
-    //    if ($('#imageHolder').css('display') == 'none') {
-    //        player.imageSeen++;
-    //    }
-    //    $('#imageHolder').toggle();
-    //});
 
     $('#closeStatBoard').click(function () {
         $('#statsBoard').hide();
@@ -494,8 +428,6 @@ function showMask() {
 
 //this function will hide the mask
 function hideMask() {
-    //console.log('hidemask called');
-
     window.setTimeout(function () {
         $('.mask').hide(500);
     }, 5);

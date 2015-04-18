@@ -22,10 +22,6 @@ section {
     box-sizing: border-box;
 }
 
-h2 {
-    /*margin-bottom: 10px;*/
-}
-
 .mask {
     position: fixed;
     width: 100%;
@@ -149,7 +145,6 @@ h2 {
     font-weight: bold;
 }
 
-/*#optionsPanel*/
 .dropPanel {
     position: absolute;    
     font-size: 24px;
@@ -234,13 +229,11 @@ h2 {
 }
 
 #boardContainer {
-    /*float: left;*/
-    /*margin: 85px 0 20px 200px;*/
+        margin-left: 0;
 }
 
 #board1 {
     box-sizing: content-box;
-    /*border: 9px outset #B5B5B5;*/
     border: 9px outset #636363;
     position: relative;
     float: left;
@@ -252,6 +245,7 @@ h2 {
     clear: both;
     position: relative;    
     left: 9px;
+    top: -21px;
 }
 
 #secScoreBoard {
@@ -265,14 +259,14 @@ h2 {
     box-sizing: content-box;    
 }
 
-#moveSection,
-#timeSection {
-    margin: 20px 0;
-    padding-bottom: 10px;
+ #secScoreBoard section {
+   display: block;
 }
 
-#scoreBoardButtonSection input[type=button] {
-    /*width: 100%;*/
+#moveSection,
+#timeSection {
+    margin: 0;
+    border-bottom: none;        
 }
 
 #totalTime,
@@ -286,27 +280,6 @@ h2 {
     margin-top: 2px;
 }
 
-/*#imageHolder {
-    margin: 70px 0 50px 40px;
-    float: left;
-    text-align: center;
-    position: relative;    
-    display: block;
-    display: table;       
-    z-index: 1;    
-    box-sizing: border-box;
-}*/
-
-/*#imageHolder img {
-    display: none;
-}*/
-
-/*#imageHolder #imgMsg {  
-    font-size: 36px;  
-    display: table-cell;
-    vertical-align: middle;    
-}*/
-
 .cell {
     box-sizing: border-box;
     border: 1px solid #000;
@@ -315,8 +288,7 @@ h2 {
 }
 
 input[type=button] {
-    font-size: 20px;        
-    /*padding: 3px 5px;*/
+    font-size: 20px;
     margin: 5px 0;
     outline: none;
 }
@@ -329,69 +301,4 @@ input[type=button] {
 #Solve {
     width: 236px;
     margin: 0 0 0 2px;
-}
-
-@media (max-width: 767px) {
-    #boardContainer {
-        margin-left: 0;
-        /*margin-top: 67px;*/
-    }
-
-    #secButton {        
-        top: -21px;
-    }
-
-    #secScoreBoard {
-        /*top: 755px;
-        width: 462px;*/
-    }
-
-    #moveSection,
-    #timeSection {
-        margin: 0;
-        /*padding-bottom: 10px;*/  
-        border-bottom: none;        
-    }   
-    
-    #secScoreBoard section {
-        display: block;
-        /*width: 100%;*/
-        /*text-align: center;*/
-        /*float: left;*/
-    }
-
-    #scoreBoardButtonSection {
-        /*margin-left: 15px;*/
-    }
-}
-
-@media (max-width: 1200px) { 
-
-   /*#imageHolder {
-        display: none;
-        position: absolute;
-        left: -42px;
-        top: 113px;
-        padding: 10px;
-        font-size: 24px;    
-        height: auto !important;
-        width: auto !important;
-        border: 5px ridge #FFF;
-        background: #FFF;
-    }
-
-    #imageHolder img {
-        display: block !important;
-    }
-
-    #imageHolder #imgMsg {
-        display: none !important;
-    }*/
-}
-
-@media (min-width: 1201px) {
-    /*#imageHolder {
-        display: block;
-        display: table !important;
-    }*/
 }
