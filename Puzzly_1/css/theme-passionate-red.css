@@ -4,7 +4,8 @@
 }
 
 .theme-passion-red #secScoreBoard,
-.theme-passion-red #optionsPanel,
+/*.theme-passion-red #optionsPanel*/
+ .theme-passion-red .dropPanel,
 .theme-passion-red #statsBoard {
     background: #FF0000;
 }

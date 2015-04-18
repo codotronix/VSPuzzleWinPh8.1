@@ -53,6 +53,7 @@ h2 {
 #statsBoard {
     display: none;
     position: fixed;
+    top: 0;
     height: 100%;
     width: 100%;
     background: #000;
@@ -148,7 +149,8 @@ h2 {
     font-weight: bold;
 }
 
-#optionsPanel {
+/*#optionsPanel*/
+.dropPanel {
     position: absolute;    
     font-size: 24px;
     padding: 10px;
@@ -159,6 +161,11 @@ h2 {
     overflow: auto;
     box-sizing: border-box;
     height: 484px;
+    width: 100%;
+}
+
+.centerAlign {
+    text-align: center;
 }
 
 #optionsPanel.up,
@@ -221,6 +228,11 @@ h2 {
     border-radius: 0;
 }
 
+#puzzleImg {
+    margin: 9px 15px 0 0;
+    float: left;
+}
+
 #boardContainer {
     /*float: left;*/
     /*margin: 85px 0 20px 200px;*/
@@ -274,7 +286,7 @@ h2 {
     margin-top: 2px;
 }
 
-#imageHolder {
+/*#imageHolder {
     margin: 70px 0 50px 40px;
     float: left;
     text-align: center;
@@ -283,19 +295,17 @@ h2 {
     display: table;       
     z-index: 1;    
     box-sizing: border-box;
-}
+}*/
 
-#imageHolder img {
+/*#imageHolder img {
     display: none;
-    /*height: 100%;
-    width: 100%;*/
-}
+}*/
 
-#imageHolder #imgMsg {  
+/*#imageHolder #imgMsg {  
     font-size: 36px;  
     display: table-cell;
     vertical-align: middle;    
-}
+}*/
 
 .cell {
     box-sizing: border-box;
@@ -357,7 +367,7 @@ input[type=button] {
 
 @media (max-width: 1200px) { 
 
-   #imageHolder {
+   /*#imageHolder {
         display: none;
         position: absolute;
         left: -42px;
@@ -376,12 +386,12 @@ input[type=button] {
 
     #imageHolder #imgMsg {
         display: none !important;
-    }
+    }*/
 }
 
 @media (min-width: 1201px) {
-    #imageHolder {
+    /*#imageHolder {
         display: block;
         display: table !important;
-    }
+    }*/
 }

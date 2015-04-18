@@ -34,54 +34,21 @@
                     <!--<img src="images/redWait.gif" />--><br />
                     <label>Please wait...</label>
                 </div>
-            </div>
-
-            <!--show completed score-->
-            <section id="statsBoard">
-                <section class="panel">
-                    <div>
-                        <h1><span class="fa fa-trophy"></span> Congratulation <span class="fa fa-trophy"></span></h1>
-                        <section class="leftCol">
-                            <label>Starting Bonus</label>
-                            <label>Time (Approx)</label>
-                            <label>Moves</label>
-                            <label>Image Seen</label>
-                            <label>Total</label>
-                        </section>
-                        <section class="midCol">
-                            <label class="startBonus">100000</label>
-                            <label class="timeTaken">300s [ x (-10) Pts ]</label>
-                            <label class="moveTaken">200 [ x (-20) Pts ]</label>
-                            <label class="imageSeen">6 [ x (-100) Pts ]</label>
-                            <label> - </label>
-                        </section>
-                        <section class="rightCol">
-                            <label class="startBonus"> 100000</label>
-                            <label class="timePenalty">- 3000</label>
-                            <label class="movePenalty">- 4000</label>
-                            <label class="imageSeenPenalty">- 600</label>
-                            <label class="totalScore"> 92400</label>
-                        </section>
-                        <section class="secButton">
-                            <button id="closeStatBoard"> Close </button>
-                        </section>
-                    </div>
-                </section>
-            </section>
+            </div>            
 
             <h1 id="gameTitle">Mini Puzzle</h1>
             <h2 id="levelDesc">( LEVEL 1 )</h2>
 
             <section id="topButtonPanel">
-                <span id="showOptionBtn" class="fa fa-cogs"></span>
-                <span id="showImgBtn" class="fa fa-picture-o"></span>
-                <span id="leaderBoardBtn" class="fa fa-bar-chart"></span>
-                <span id="creditsBtn" class="fa fa-user"></span>
-                <span id="helpBtn" class="fa">?</span>
+                <span id="options" class="fa fa-cogs"></span>
+                <span id="showImg" class="fa fa-picture-o"></span>
+                <span id="showLeaderBoard" class="fa fa-bar-chart"></span>
+                <span id="showCredits" class="fa fa-user"></span>
+                <span id="showHelp" class="fa">?</span>
             </section>
 
 
-            <section id="optionsPanel" class="down">
+            <section id="optionsPanel" class="down dropPanel">
                 <!--<div id="AllOptions">-->
                 <!-- Select Level Section -->
                 <div class="optionsContainer">
@@ -159,13 +126,70 @@
             </div>
 
             <!-- This container will show the image if a user wants to see it -->
-            <section id="imageHolder">
-                <span id="imgMsg">CLICK TO SEE THE COMPLETE PICTURE</span>
+            <section id="showImgPanel" class="dropPanel">
                 <img id="puzzleImg" src="images/1.jpg" />
+                <label>
+                Try to build a mental picture of this image. This will help you train your memory.
+                    <br />
+                Remember, the less number of time you see this image, the more reward you get... 
+                </label>
             </section>
 
-            <!-- Body Ends-->
-        </div>
+            <!-- Help Panel -->
+            <section id="showHelpPanel" class="dropPanel">
+                At any point of time any movable cell can be moved only in one direction. So, click on a cell to move it. 
+                Shuffle it by clicking the shuffle button. 
+                <br />Try to solve it in as less moves as you can. <br/><br/>
+                Good Luck !!!
+            </section>
+
+            <!-- Credits Panel -->
+            <section id="showCreditsPanel" class="dropPanel centerAlign">
+                <h2>Credits</h2>
+                <p>
+                    <u>Design and Coding</u><br />
+                    Suman Barick
+                </p>
+            </section>
+
+            <!-- LeaderBoard Panel -->
+            <section id="showLeaderBoardPanel" class="dropPanel centerAlign">
+                <h2>The Leaderboard</h2>
+            </section>
+
+            <!--show completed score-->
+            <section id="statsBoard">
+                <section class="panel">
+                    <div>
+                        <h1><span class="fa fa-trophy"></span> Congratulation <span class="fa fa-trophy"></span></h1>
+                        <section class="leftCol">
+                            <label>Starting Bonus</label>
+                            <label>Time (Approx)</label>
+                            <label>Moves</label>
+                            <label>Image Seen</label>
+                            <label>Total</label>
+                        </section>
+                        <section class="midCol">
+                            <label class="startBonus">100000</label>
+                            <label class="timeTaken">300s [ x (-10) Pts ]</label>
+                            <label class="moveTaken">200 [ x (-20) Pts ]</label>
+                            <label class="imageSeen">6 [ x (-100) Pts ]</label>
+                            <label> - </label>
+                        </section>
+                        <section class="rightCol">
+                            <label class="startBonus"> 100000</label>
+                            <label class="timePenalty">- 3000</label>
+                            <label class="movePenalty">- 4000</label>
+                            <label class="imageSeenPenalty">- 600</label>
+                            <label class="totalScore"> 92400</label>
+                        </section>
+                        <section class="secButton">
+                            <button id="closeStatBoard"> Close </button>
+                        </section>
+                    </div>
+                </section>
+            </section>
+</div>
     </div>
     <canvas id="canvas" class="noDisplay"></canvas>
 </body>

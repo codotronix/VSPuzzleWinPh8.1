@@ -4,7 +4,8 @@
 }
 
 .theme-metro-blue #secScoreBoard,
-.theme-metro-blue #optionsPanel,
+/*.theme-metro-blue #optionsPanel*/
+.theme-metro-blue .dropPanel,
 .theme-metro-blue #statsBoard {
     background: #8081FF;
 }
