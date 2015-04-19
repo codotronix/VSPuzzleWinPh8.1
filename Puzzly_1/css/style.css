@@ -99,7 +99,7 @@ section {
 }
 
 .leftCol {
-    width: 37%;
+    width: 35%;
     padding-left: 10px;
 }
 
@@ -108,7 +108,11 @@ section {
 }
 
 .rightCol {
-    width: 15%;
+    width: 20%;
+}
+
+.colOneThird {
+    width: 130px;
 }
 
 #gameTitle {
@@ -228,6 +232,27 @@ section {
     float: left;
 }
 
+#showLeaderBoardPanel table {
+    margin-bottom: 25px;
+}
+
+#showLeaderBoardPanel table td {
+    border: 1px solid #FFF; 
+}
+
+#showLeaderBoardPanel table td .fa-star {
+    color: gold;
+    padding: 5px;
+    border: none;
+    font-size: 25px;
+}
+
+#showLeaderBoardPanel .fa-trophy {
+    border: none;
+    color: gold;
+    font-size: 45px;
+}
+
 #boardContainer {
         margin-left: 0;
 }
@@ -249,12 +274,13 @@ section {
 }
 
 #secScoreBoard {
+    background: #000;
     width: 140px;
     padding: 10px 0;
     text-align: center;
     font-size: 20px;
     position: absolute;
-    top: 184px;
+    top: 193px;
     left: 263px;    
     box-sizing: content-box;    
 }

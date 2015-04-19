@@ -8,7 +8,7 @@ function initGame() {
     // NOTE: I have started the Cell Array from 1... Hence the 0th location is blank
 
     var imageWidth = 240;	            //	$('#puzzleImg').height(); //Since I have decided to take only 240x240 size image, So can be hard coded
-   
+
     //an array of cell bojects to hold information about all the cells
     var cells = [];
     // say it is a m x m square puzzle
@@ -136,7 +136,7 @@ function initGame() {
         }
 
         return (swapSuccessful);
-    }     
+    }
 
     function shuffleUp3() {
         //checking the position of black cell, determine in which direction the blank cell 
@@ -213,8 +213,8 @@ function initGame() {
                 $(targetCellId).css('top', blankTopPx);
             }
             else if (tempDirections[ranDir] == 4) { //left is chosen               
-                var targetDataCellId = blankOnRow + '_' + (blankTop + (blankLeft - diffFactor));               
-                targetCellId = '#' + $('.cell[data-cellid=' + targetDataCellId + ']').attr('id');                
+                var targetDataCellId = blankOnRow + '_' + (blankTop + (blankLeft - diffFactor));
+                targetCellId = '#' + $('.cell[data-cellid=' + targetDataCellId + ']').attr('id');
                 $('#' + blank.id).css('left', $(targetCellId).css('left'));
                 $(targetCellId).css('left', blankLeftPx);
             }
@@ -224,7 +224,7 @@ function initGame() {
             $(targetCellId).attr('data-cellid', $('#' + blank.id).attr('data-cellid'));
             $('#' + blank.id).attr('data-cellid', tempo);
         }
-        
+
         hideMask();
         resetPlayerStats();
     }
@@ -263,7 +263,7 @@ function initGame() {
         //console.log(player.startTime)
         //totalMove
         var levelValue = parseInt($('#selectLevel input[type=radio]:checked').val())
-        var negativeFactor = (9 - levelValue) * 5; // the more difficult the level, the less will be the negativeFactor
+        var negativeFactor = (9 - levelValue) * 50; // the more difficult the level, the less will be the negativeFactor
         var timePenalty = timeTaken * negativeFactor;
         var movePenalty = totalMove * negativeFactor * 2;
         var imageSeenPenalty = player.imageSeen * negativeFactor * 3;
@@ -281,6 +281,9 @@ function initGame() {
         $('#statsBoard .rightCol .movePenalty').text('- ' + movePenalty);
         $('#statsBoard .rightCol .imageSeenPenalty').text('- ' + imageSeenPenalty);
         $('#statsBoard .rightCol .totalScore').text(totalScore);
+
+        //update Leaderboard if required
+        sortNewLevelNScore((m-2), totalScore);
     }
 
     function resetPlayerStats() {
@@ -295,7 +298,108 @@ function initGame() {
     //Initiate the puzzle board
     init();
 
-    /*********************** ALL THE CLICK EVENTS ******************************/
+    /********************************************* ALL FILE OPERATIONS **************************************************************/
+    var savedGameFileReadInProgress = true;
+    var saveFile;
+    var FileDataObj;
+
+    createOpenSavedFile();
+
+    //create/open file
+    function createOpenSavedFile() {
+        console.log('create/open function is called');
+        Windows.Storage.ApplicationData.current.localFolder.createFileAsync("SavedGameData.txt",
+           Windows.Storage.CreationCollisionOption.openIfExists).then(function (file) {
+               saveFile = file;
+               console.log('File opened successfully...');
+               readScoresFromFile();
+           });
+    }
+
+    //read frm file
+    function readScoresFromFile() {
+        savedGameFileReadInProgress = true;
+        console.log('file reading in progress...');
+        Windows.Storage.FileIO.readTextAsync(saveFile).then(function (contents) {
+            console.log('file read successfully... <contents>' + contents + '</contents>');
+            // Add code to process the text read from the file            
+            if (contents.trim().length <= 0) {
+                //yes this is a newly created file, so initialize FileDataObj
+                FileDataObj = {
+                    'Level_1': [0, 0, 0],
+                    'Level_2': [0, 0, 0],
+                    'Level_3': [0, 0, 0],
+                    'Level_4': [0, 0, 0]
+                };
+
+                //console.log(JSON.stringify(FileDataObj));
+                updateLeaderBoard();
+                var stringObj = JSON.stringify(FileDataObj);
+                writeToFile(stringObj);
+                console.log('Empty file read. Hence calling write function with data <content>' + stringObj + '</content>');
+            }
+            else {
+                //contents = "'" + contents + "'";
+                console.log('Non Empty File Found...');
+                FileDataObj = JSON.parse(contents);
+                console.log('And after JSON.parse that non empty file, we got = ' + FileDataObj);
+            }
+            savedGameFileReadInProgress = false;
+            updateLeaderBoard();
+        });
+    }
+    
+    //update leader board with new score
+    function updateLeaderBoard() {
+        console.log('update leaderboard function is called');       
+        for (var i = 1; i <= 4; i++) {
+            var level = "Level_" + i;
+            for (var j = 0; j < 3; j++) {
+                $('#' + level + '_' + j).text(FileDataObj[level][j]);
+            }
+        }
+    }
+
+    //write new data to file
+    function writeToFile(newData) {
+        console.log('write function is called');
+        Windows.Storage.FileIO.writeTextAsync(saveFile, newData).then(function () {
+            console.log('Written successfully ' + newData);
+            updateLeaderBoard();
+        });
+    }
+
+    //whenever a player wins, this function will be called
+    function sortNewLevelNScore(newLevel, newScore) {        
+        var level = 'Level_' + newLevel;
+        var isModified = false;
+        for (var i = 2; i >= 0; i--) {
+            if (parseInt(FileDataObj[level][i]) < newScore) {
+                FileDataObj[level][i] = newScore;
+                isModified = true;
+                break;
+            }
+        }
+        console.log('inside sortNewLevelNScore function, FileDataObj = ' + FileDataObj);
+
+        //if date is changed then sort and update
+        if (isModified) {
+            //now sort the scores Greater to lesser
+            for (var j = 1; j <= 2; j++) {
+                for (var k = 2; k >= j; k--) {
+                    if (parseInt(FileDataObj[level][k]) > parseInt(FileDataObj[level][k - 1])) {
+                        var temp = FileDataObj[level][k];
+                        FileDataObj[level][k] = FileDataObj[level][k - 1];
+                        FileDataObj[level][k - 1] = temp;
+                    }
+                }
+            }
+            writeToFile(JSON.stringify(FileDataObj));
+            isModified = false;
+        }
+    };
+
+    /************************************************ ALL THE CLICK EVENTS *********************************************************/
 
     //Solve button is clicked
     $('#Solve').click(function () {
@@ -357,6 +461,8 @@ function initGame() {
                 populateCongratsBoard();
                 $('#statsBoard').css('display', 'table');
                 player.isPlaying = false;
+                timerOn = false;
+                $('#startStopTimer').removeClass('stopTimer').addClass('startTimer').val('Timer On');
             }
         }
     });
@@ -368,7 +474,7 @@ function initGame() {
         $('#levelDesc').html("( LEVEL " + (m - 2) + " )");
         diffFactor = imageWidth / m;
         $('#board1').html('');
-        
+
         //wait for the mask to show itself
         window.setTimeout(init, 100);
     })
