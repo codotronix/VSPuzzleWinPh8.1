@@ -263,7 +263,7 @@ function initGame() {
         //console.log(player.startTime)
         //totalMove
         var levelValue = parseInt($('#selectLevel input[type=radio]:checked').val())
-        var negativeFactor = (9 - levelValue) * 50; // the more difficult the level, the less will be the negativeFactor
+        var negativeFactor = (9 - levelValue) * 9; // the more difficult the level, the less will be the negativeFactor
         var timePenalty = timeTaken * negativeFactor;
         var movePenalty = totalMove * negativeFactor * 2;
         var imageSeenPenalty = player.imageSeen * negativeFactor * 3;
@@ -322,16 +322,29 @@ function initGame() {
         console.log('file reading in progress...');
         Windows.Storage.FileIO.readTextAsync(saveFile).then(function (contents) {
             console.log('file read successfully... <contents>' + contents + '</contents>');
-            // Add code to process the text read from the file            
+            // Add code to process the text read from the file 
+            var dummyDate = (new Date()).toLocaleString().split(' ')[0];    //splitting by space because IE gives it as "‎4‎/‎19‎/‎2015‎ ‎11‎:‎43‎:‎21‎ ‎PM", but chrome gives it as "‎4‎/‎19‎/‎2015‎ ,11‎:‎43‎:‎21‎ ‎PM"
+            //console.log('dummyDate' + dummyDate);
             if (contents.trim().length <= 0) {
                 //yes this is a newly created file, so initialize FileDataObj
-                FileDataObj = {
-                    'Level_1': [0, 0, 0],
-                    'Level_2': [0, 0, 0],
-                    'Level_3': [0, 0, 0],
-                    'Level_4': [0, 0, 0]
-                };
+                FileDataObj = {};
 
+                FileDataObj.Level_1 = {};
+                FileDataObj.Level_1.ScoreArray = [0, 0, 0];
+                FileDataObj.Level_1.DateArray = [dummyDate, dummyDate, dummyDate];
+
+                FileDataObj.Level_2 = {};
+                FileDataObj.Level_2.ScoreArray = [0, 0, 0];
+                FileDataObj.Level_2.DateArray = [dummyDate, dummyDate, dummyDate];
+
+                FileDataObj.Level_3 = {};
+                FileDataObj.Level_3.ScoreArray = [0, 0, 0];
+                FileDataObj.Level_3.DateArray = [dummyDate, dummyDate, dummyDate];
+
+                FileDataObj.Level_4 = {};
+                FileDataObj.Level_4.ScoreArray = [0, 0, 0];
+                FileDataObj.Level_4.DateArray = [dummyDate, dummyDate, dummyDate];
+               
                 //console.log(JSON.stringify(FileDataObj));
                 updateLeaderBoard();
                 var stringObj = JSON.stringify(FileDataObj);
@@ -355,7 +368,15 @@ function initGame() {
         for (var i = 1; i <= 4; i++) {
             var level = "Level_" + i;
             for (var j = 0; j < 3; j++) {
-                $('#' + level + '_' + j).text(FileDataObj[level][j]);
+                //$('#' + level + '_' + j).text(FileDataObj[level][j]);
+                var scoreFieldID = level + '_Score_' + j;       // it looks like this => "Level_4_Score_0"
+                var dateFieldID = level + '_Date_' + j;         // it looks like this => "Level_4_Date_0"
+
+                var score = FileDataObj[level]['ScoreArray'][j];
+                var theDate = FileDataObj[level]['DateArray'][j];
+
+                $('#' + scoreFieldID).text(score);
+                $('#' + dateFieldID).text(theDate);
             }
         }
     }
@@ -374,8 +395,9 @@ function initGame() {
         var level = 'Level_' + newLevel;
         var isModified = false;
         for (var i = 2; i >= 0; i--) {
-            if (parseInt(FileDataObj[level][i]) < newScore) {
-                FileDataObj[level][i] = newScore;
+            if (parseInt(FileDataObj[level]['ScoreArray'][i]) < newScore) {
+                FileDataObj[level]['ScoreArray'][i] = newScore;
+                FileDataObj[level]['DateArray'][i] = (new Date()).toLocaleString().split(' ')[0];
                 isModified = true;
                 break;
             }
@@ -387,10 +409,14 @@ function initGame() {
             //now sort the scores Greater to lesser
             for (var j = 1; j <= 2; j++) {
                 for (var k = 2; k >= j; k--) {
-                    if (parseInt(FileDataObj[level][k]) > parseInt(FileDataObj[level][k - 1])) {
-                        var temp = FileDataObj[level][k];
-                        FileDataObj[level][k] = FileDataObj[level][k - 1];
-                        FileDataObj[level][k - 1] = temp;
+                    if (parseInt(FileDataObj[level]['ScoreArray'][k]) > parseInt(FileDataObj[level]['ScoreArray'][k - 1])) {
+                        var temp = FileDataObj[level]['ScoreArray'][k];
+                        FileDataObj[level]['ScoreArray'][k] = FileDataObj[level]['ScoreArray'][k - 1];
+                        FileDataObj[level]['ScoreArray'][k - 1] = temp;
+
+                        temp = FileDataObj[level]['DateArray'][k];
+                        FileDataObj[level]['DateArray'][k] = FileDataObj[level]['DateArray'][k - 1];
+                        FileDataObj[level]['DateArray'][k - 1] = temp;
                     }
                 }
             }
@@ -398,6 +424,8 @@ function initGame() {
             isModified = false;
         }
     };
+
+    ////////////////////////////////////////////// END OF ALL FILE OPERATION ////////////////////////////////////////////////////////
 
     /************************************************ ALL THE CLICK EVENTS *********************************************************/
 

@@ -240,6 +240,18 @@ section {
     border: 1px solid #FFF; 
 }
 
+#showLeaderBoardPanel table tr td:first-child {
+    width: 150px; 
+}
+
+#showLeaderBoardPanel table tr td:nth-child(2) {
+    width: 150px; 
+}
+
+#showLeaderBoardPanel table tr td:last-child {
+    width: 160px; 
+}
+
 #showLeaderBoardPanel table td .fa-star {
     color: gold;
     padding: 5px;
