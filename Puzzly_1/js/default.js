@@ -26,6 +26,10 @@
         // saved and restored across suspension. If you need to complete an
         // asynchronous operation before your application is suspended, call
         // args.setPromise().
+        
+        //stop timer if it is running
+        timerOn = false;
+        $('#startStopTimer').removeClass('stopTimer').addClass('startTimer').val('Timer On');
     };
 
     app.addEventListener("activated", activated, false);
@@ -37,12 +41,9 @@
 function activated(eventObject) {
     var activationKind = eventObject.detail.kind;
     var activatedEventArgs = eventObject.detail.detail;
-    //console.log(activationKind);
-    if (activationKind == 1002) {
+    //if (activationKind == 1002) 
+    if(activationKind == Windows.ApplicationModel.Activation.ActivationKind.pickFileContinuation){
         continueFileOpenPicker(activatedEventArgs);
-        //if (options && options.activationKind === Windows.ApplicationModel.Activation.ActivationKind.pickFileContinuation) {
-        //    continueFileOpenPicker(activatedEventArgs);
-        //}
     }
 }
 

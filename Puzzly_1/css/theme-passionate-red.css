@@ -1,13 +1,14 @@
 ﻿body.theme-passion-red,
 .theme-passion-red .mask {
-    background: rgb(211, 0, 16);
+    /*background: rgb(211, 0, 16);*/
+    background: #AC193D;
 }
 
 .theme-passion-red #secScoreBoard,
-/*.theme-passion-red #optionsPanel*/
  .theme-passion-red .dropPanel,
 .theme-passion-red #statsBoard {
-    background: #FF0000;
+    /*background: #FF0000;*/
+    background: #BF1E4B;
 }
 
 .theme-passion-red button:hover,

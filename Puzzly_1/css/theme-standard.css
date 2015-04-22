@@ -4,8 +4,7 @@
     background: url('../images/puzzleBg.jpg') 0 0 repeat;
 }
 
-.theme-standard .mask,
-.theme-standard .dropPanel {
+.theme-standard .mask{
     background: linear-gradient(to bottom right, red, black, black, blue);
 }
 
@@ -26,7 +25,8 @@
     width: auto;
 }
 
-.theme-standard #optionsPanel {
+.theme-standard #optionsPanel,
+.theme-standard  .dropPanel {
     color: #d9d9d9;
     background: #000;
     background: linear-gradient(to bottom right, red, black, black, blue);    

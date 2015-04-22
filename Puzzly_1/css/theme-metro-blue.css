@@ -1,13 +1,15 @@
 ﻿body.theme-metro-blue,
 .theme-metro-blue .mask {
-    background: rgb(58, 102, 240);
+    /*background: rgb(58, 102, 240);*/
+    background: #2672EC;
 }
 
 .theme-metro-blue #secScoreBoard,
 /*.theme-metro-blue #optionsPanel*/
 .theme-metro-blue .dropPanel,
 .theme-metro-blue #statsBoard {
-    background: #8081FF;
+    /*background: #8081FF;*/
+    background: #2E8DEF;
 }
 
 .theme-metro-blue #board1 {
